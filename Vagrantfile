@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/m4rvin/MyApp.git
 
     cd ./MyApp/app
-    nodejs ./server.js
+    nodejs ./server.js &
 
 
 
