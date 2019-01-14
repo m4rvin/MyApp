@@ -6,7 +6,7 @@ var storeTimestamp = function(req, res) {
     if (req.method == 'POST') {
 
 		request.post({
-			url: 'http://localhost:8086/write?db=mydb',
+			url: 'http://192.168.50.5:8086/write?db=mydb',
 			//body: "cpu_load_short,host=server0X,region=us-west value=1"
 			body: 'eventlog,host=server0X,region=us-west value="Received a POST request event."'
 
