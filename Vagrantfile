@@ -70,6 +70,8 @@ Vagrant.configure("2") do |config|
     sudo dpkg -i influxdb_1.7.2_amd64.deb
     sudo service influxdb start 
 
+    curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE mydb"
+
     sudo apt-get -y install nodejs npm
     nodejs --version
     npm --version
