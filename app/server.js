@@ -37,4 +37,8 @@ var storeTimestamp = function(req, res) {
 
 var server = http.createServer(storeTimestamp);
 
-server.listen(8085);
+server.on('listening',function(){
+    console.log('ok, server is running');
+});
+
+server.listen(80);

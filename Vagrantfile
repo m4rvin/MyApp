@@ -77,6 +77,15 @@ Vagrant.configure("2") do |config|
     npm config set registry="http://registry.npmjs.org/"
     npm install request
 
+    sudo apt-get -y install git
+    rm -r ./MyApp
+    git clone https://github.com/m4rvin/MyApp.git
+
+    cd ./MyApp/app
+    nodejs ./server.js
+
+
+
 
   SHELL
 
