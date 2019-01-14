@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/trusty64"
+  # config.vm.box = "ubuntu/trusty64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -63,33 +63,35 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-    apt-get update
+ 
+ ###############################
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
 
-    wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.2_amd64.deb
-    sudo dpkg -i influxdb_1.7.2_amd64.deb
-    sudo service influxdb start 
+  #   wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.2_amd64.deb
+  #   sudo dpkg -i influxdb_1.7.2_amd64.deb
+  #   sudo service influxdb start 
 
-    curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE mydb"
+  #   curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE mydb"
 
-    sudo apt-get -y install nodejs npm
-    nodejs --version
-    npm --version
+  #   sudo apt-get -y install nodejs npm
+  #   nodejs --version
+  #   npm --version
 
-    npm config set registry="http://registry.npmjs.org/"
-    npm install request
+  #   npm config set registry="http://registry.npmjs.org/"
+  #   npm install request
 
-    sudo apt-get -y install git
-    rm -r ./MyApp
-    git clone https://github.com/m4rvin/MyApp.git
+  #   sudo apt-get -y install git
+  #   rm -r ./MyApp
+  #   git clone https://github.com/m4rvin/MyApp.git
 
-    cd ./MyApp/app
-    nodejs ./server.js &
-
-
+  #   cd ./MyApp/app
+  #   nodejs ./server.js &
 
 
-  SHELL
+
+
+  # SHELL
 
   #config.vm.provision "ansible_local" do |ansible|
   #  ansible.playbook = "playbook.yml"
@@ -101,6 +103,31 @@ Vagrant.configure("2") do |config|
   #config.vm.provision "ansible" do |ansible|
    # ansible.playbook = "playbook.yml"
   #end
+
+###################################
+
+  config.vm.define "web" do |web|
+    web.vm.box = "ubuntu/trusty64"
+
+    config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+    sudo apt-get install -y software-properties-common
+    sudo apt-add-repository -y ppa:ansible/ansible
+    sudo apt-get update
+    sudo apt-get install -y ansible
+
+    ansible --version
+
+    ansible-pull -U https://github.com/m4rvin/MyApp -d .
+    ansible-playbook  ./MyApp/playbooks/webPlaybook.yml
+
+
+    SHELL
+  end
+
+  # config.vm.define "db" do |db|
+  #   db.vm.box = "ubuntu/trusty64"
+  # end
 
 
 

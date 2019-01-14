@@ -1,0 +1,18 @@
+- hosts: localhost
+  become: true
+  tasks:
+  - name: Install nodejs
+    apt: 
+      name: nodejs
+
+  - name: Install npm
+    apt: 
+      name: npm
+    
+  - name: Install nodejs request library
+    npm: 
+      name: request
+
+  - name: Install git
+    apt: 
+      name: git
