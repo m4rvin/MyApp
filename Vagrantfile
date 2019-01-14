@@ -65,11 +65,24 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
+
     wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.2_amd64.deb
     sudo dpkg -i influxdb_1.7.2_amd64.deb
     sudo service influxdb start 
 
+    sudo apt-get -y install nodejs npm
+    nodejs --version
+    npm --version
+
+    npm config set registry="http://registry.npmjs.org/"
+    npm install request
+
+
   SHELL
+
+  #config.vm.provision "ansible_local" do |ansible|
+  #  ansible.playbook = "playbook.yml"
+  #end
 
   #
   # Run Ansible from the Vagrant Host
