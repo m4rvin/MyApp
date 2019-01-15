@@ -105,29 +105,6 @@ Vagrant.configure("2") do |config|
   #end
 
 ###################################
-
-  config.vm.define "web" do |web|
-    web.vm.box = "ubuntu/trusty64"
-    
-    config.vm.network "private_network", ip: "192.168.50.4"
-    config.vm.network :forwarded_port, guest: 80, host: 4567
-
-
-    config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get update
-    sudo apt-get install -y software-properties-common
-    sudo apt-add-repository -y ppa:ansible/ansible
-    sudo apt-get update
-    sudo apt-get install -y ansible
-    ansible --version
-        
-    sudo apt-get install -y git
-
-    ansible-pull -U https://github.com/m4rvin/ansibleMyAppWebPlay 
-
-    SHELL
-  end
-
   config.vm.define "db" do |db|
     db.vm.box = "ubuntu/trusty64"
 
@@ -147,5 +124,24 @@ Vagrant.configure("2") do |config|
   end
 
 
+  config.vm.define "web" do |web|
+    web.vm.box = "ubuntu/trusty64"
+    
+    config.vm.network :forwarded_port, guest: 80, host: 4567
 
+
+    config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+    sudo apt-get install -y software-properties-common
+    sudo apt-add-repository -y ppa:ansible/ansible
+    sudo apt-get update
+    sudo apt-get install -y ansible
+    ansible --version
+        
+    sudo apt-get install -y git
+
+    ansible-pull -U https://github.com/m4rvin/ansibleMyAppWebPlay 
+
+    SHELL
+  end
 end
