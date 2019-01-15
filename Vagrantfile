@@ -140,8 +140,10 @@ Vagrant.configure("2") do |config|
 
     curl -i -XPOST http://192.168.50.5:8086/query --data-urlencode "q=CREATE DATABASE mydb"
 
-
     SHELL
+
+    #To see stored data, use 'vagrant ssh db' an once logged use -> curl -G 'http://localhost:8086/query?pretty=true' --data-urlencode "db=mydb" --data-urlencode "q=SELECT \"value\" FROM \"eventlog\" WHERE \"region\"='us-west'"
+
   end
 
 
