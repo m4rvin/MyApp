@@ -132,7 +132,6 @@ Vagrant.configure("2") do |config|
     db.vm.box = "ubuntu/trusty64"
 
     config.vm.network "private_network", ip: "192.168.50.5"
-    config.vm.network :forwarded_port, guest: 80, host: 4568
 
     config.vm.provision "shell", inline: <<-SHELL
     wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.2_amd64.deb
